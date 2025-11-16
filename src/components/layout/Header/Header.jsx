@@ -1,6 +1,6 @@
 import styles from './Header.module.css';
 import Logo from '../../../assets/images/logo.svg';
-import DropdownButton from '../../sections/DropdownButton/DropdownButton';
+import DropdownButton from '../../ui/DropdownButton/DropdownButton';
 
 const Header = () => {
     return (
