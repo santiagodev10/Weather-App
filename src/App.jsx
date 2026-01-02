@@ -6,9 +6,7 @@ function App() {
 
   return (
     <>
-      <Layout>
-        <h1>How's the sky looking today</h1>
-      </Layout>
+      <Layout></Layout>
     </>
   )
 }

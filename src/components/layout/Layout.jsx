@@ -1,10 +1,13 @@
 import Header from './Header/Header';
+import Search  from './Search/Search';
 
-const Layout = ({ children }) => {
+const Layout = () => {
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <main>
+                <Search />
+            </main>
         </>
     );
 };

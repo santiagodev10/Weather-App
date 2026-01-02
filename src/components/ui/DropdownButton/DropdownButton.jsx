@@ -1,7 +1,8 @@
 import { useState } from "react";
-import iconDropdown from "../../../assets/images/icon-dropdown.svg";
-import iconUnits from "../../../assets/images/icon-units.svg";
 import styles from "./DropdownButton.module.css";
+
+const iconDropdown = "/images/icon-dropdown.svg";
+const iconUnits = "/images/icon-units.svg";
 
 const DropdownButton = ({ temperature, onSelectTemp, windSpeed, onSelectWind, precipitation, onSelectPrep }) => {
     const [isOpen, setIsOpen] = useState(false);

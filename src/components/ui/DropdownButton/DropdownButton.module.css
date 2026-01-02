@@ -48,7 +48,7 @@
 }
 
 .dropdown-item-selected {
-    background-image: url("../../../assets/images/icon-checkmark.svg");
+    background-image: url("/images/icon-checkmark.svg");
     background-repeat: no-repeat;
     background-position: right 1rem center;
     border-radius: 1rem;
