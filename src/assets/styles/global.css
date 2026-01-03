@@ -46,3 +46,9 @@ body {
     background-color: var(--Neutral-900);
     padding: 2rem;
 }
+
+@media (min-width: 1024px) {
+    body {
+        padding: 4rem 10rem;
+    }
+}

@@ -3,9 +3,9 @@ import WeatherHeroCard from "./WeatherHeroCard/WeatherHeroCard";
 
 const WeatherSummary = () => {
     return (
-        <section>
+        <>
             <WeatherHeroCard />
-        </section>
+        </>
     )
 }
 
