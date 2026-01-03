@@ -6,7 +6,7 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: var(--font-size-xl);
     font-family: var(--font-heading);
     text-align: center;
 }

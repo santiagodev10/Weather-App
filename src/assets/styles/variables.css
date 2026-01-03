@@ -22,5 +22,8 @@
     --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
 
     /*FONT SIZES*/
+    --font-size-xxl: 8rem;
+    --font-size-xl: 5.8rem;
+    --font-size-lg: 2.6rem;
     --font-size-base: 1.8rem;
 }

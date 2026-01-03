@@ -44,4 +44,5 @@ html, * {
 
 body {
     background-color: var(--Neutral-900);
+    padding: 2rem;
 }

@@ -1,7 +1,6 @@
 .title {
     margin-top: 4rem;
-    padding: 2rem;
-    font-size: 5.4rem;
+    font-size: var(--font-size-xl);
     text-align: center;
 }
 
@@ -12,7 +11,7 @@
     align-items: center;
     gap: 1rem;
     margin-top: 2rem;
-    padding: 2rem;
+    padding: 0 0 2rem 0;
 }
 
 .field-styles {
