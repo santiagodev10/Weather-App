@@ -2,7 +2,7 @@ import styles from "./WeatherDetailsGrid.module.css";
 
 const WeatherDetailsGrid = () => {
     return (
-        <aside>
+        <section className={styles.container}>
             <div className={styles["data-container"]}>
                 <p className={styles["data-item"]}>Feels Like</p>
                 <p className={styles["data-value"]}>64°</p>
@@ -19,7 +19,7 @@ const WeatherDetailsGrid = () => {
                 <p className={styles["data-item"]}>Precipitation</p>
                 <p className={styles["data-value"]}>0 in</p>
             </div>
-        </aside>
+        </section>
     )
 }
 

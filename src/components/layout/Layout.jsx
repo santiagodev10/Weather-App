@@ -1,6 +1,7 @@
 import Header from './Header/Header';
 import Search  from './Search/Search';
 import WeatherSummary from './WeatherSummary/WeatherSummary';
+import DailyForecast from './DailyForecast/DailyForecast';
 
 const Layout = () => {
     return (
@@ -9,6 +10,7 @@ const Layout = () => {
             <main>
                 <Search />
                 <WeatherSummary />
+                <DailyForecast />
             </main>
         </>
     );
