@@ -31,7 +31,11 @@
 
 @media (min-width: 1024px) {
     .container {
-        width: 75%;
+        grid-column: 1;
+        grid-row: 2;
+        align-self: center;
+        margin-top: 0;
+        width: 100%;
         grid-template-columns: repeat(4, 1fr);
     }
 }

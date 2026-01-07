@@ -2,7 +2,7 @@ import styles from "./DailyForecast.module.css"
 
 const DailyForecast = () => {
     return (
-        <section>
+        <section className={styles["daily-forecast-section"]}>
             <h2 className={styles["daily-forecast-title"]}>Daily forecast</h2>
             <div className={styles["daily-forecast-wrapper"]}>
                 <div className={styles["daily-forecast-item"]}>

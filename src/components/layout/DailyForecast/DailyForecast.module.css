@@ -1,4 +1,4 @@
-section {
+.daily-forecast-section {
     margin-top: 2rem;
 }
 
@@ -48,12 +48,21 @@ section {
 
 .daily-forecast-max-temp,
 .daily-forecast-min-temp {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     color: var(--Neutral-200);
 }
 
 @media (min-width: 1024px) {
-    section {
-        width: 75%;
+    .daily-forecast-section {
+        grid-column: 1;
+        grid-row: 3;
+        align-self: flex-end;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .daily-forecast-wrapper {
+        grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
     }
 }
