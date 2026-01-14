@@ -1,11 +1,11 @@
 import styles from './Header.module.css';
-import DropdownButton from '../../ui/DropdownButton/DropdownButton';
+import UnitsDropdown from '../../ui/DropdownButton/UnitsDropdown';
 
 const Header = () => {
     return (
         <header className={styles['header-container']}>
             <img className={styles.logo} src="/images/logo.svg" alt="Weather App Logo" />
-            <DropdownButton 
+            <UnitsDropdown 
                 temperature={['Celsius (°C)', 'Fahrenheit (°F)']} 
                 onSelectTemp={(temperatureSelect) => console.log(`Selected temperature unit: ${temperatureSelect}`)}
                 windSpeed={["km/h", "mph"]}
