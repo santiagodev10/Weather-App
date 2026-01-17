@@ -1,72 +1,33 @@
 import styles from "./HourlyForecast.module.css"
 import DaysDropdown from "../../ui/DropdownButton/DaysDropdown";
 
-const daysOfTheWeek = ["monday", "tuesday", "wedsneday", "thursday", "friday", "saturday", "sunday"];
+const HourlyForecast = ({ hourly }) => {
+    if (!hourly) return null;
+    
+    // Mostramos las primeras 24 horas recibidas
+    const hoursToShow = hourly.time.slice(15, 23);
 
-
-
-const HourlyForecast = () => {
     return (
         <aside>
             <h2 className={styles["hourly-forecast-title"]}>Hourly forecast</h2>
-            <DaysDropdown days={daysOfTheWeek}/>
+            {/* Opcional: pasar lógica real al dropdown en el futuro */}
+            <DaysDropdown days={["Forecast"]}/> 
+            
             <div className={styles["hourly-forecast-container"]}>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
-                <div className={styles["hourly-forecast-item"]}>
-                    <div className={styles["hourly-forecast-inner-container"]}>
-                        <img className={styles["hourly-forecast-image"]} src="../../../public/images/icon-snow.webp" alt="weather icon" />
-                        <p className={styles["hourly-forecast-hour"]}>3 PM</p>
-                    </div>
-                    <p className={styles["hourly-forecast-temp"]}>68</p>
-                </div>
+                {hoursToShow.map((time, index) => {
+                     const date = new Date(time);
+                     const hourStr = date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true });
+
+                     return (
+                        <div key={time} className={styles["hourly-forecast-item"]}>
+                             <div className={styles["hourly-forecast-inner-container"]}>
+                                <img className={styles["hourly-forecast-image"]} src="/images/icon-sunny.webp" alt="weather icon" />
+                                <p className={styles["hourly-forecast-hour"]}>{hourStr}</p>
+                             </div>
+                             <p className={styles["hourly-forecast-temp"]}>{Math.round(hourly.temperature_2m[index])}°</p>
+                        </div>
+                     );
+                })}
             </div>
         </aside>
     )
