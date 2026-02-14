@@ -1,5 +1,6 @@
 import styles from "./HourlyForecast.module.css"
 import DaysDropdown from "../../ui/DropdownButton/DaysDropdown";
+import { getWeatherIcon } from "../../../utils/getIconsFromWeather";
 
 const HourlyForecast = ({ hourly }) => {
     if (!hourly) return null;
@@ -7,8 +8,6 @@ const HourlyForecast = ({ hourly }) => {
     
     // Mostramos las primeras 24 horas recibidas
     const hoursToShow = hourly.time.slice(15, 23);
-    const weatherCode = hourly.weather_code;
-    console.log(weatherCode);
 
     return (
         <aside>
@@ -18,18 +17,21 @@ const HourlyForecast = ({ hourly }) => {
             
             <div className={styles["hourly-forecast-container"]}>
                 {hoursToShow.map((time, index) => {
-                     const date = new Date(time);
-                     const hourStr = date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true });
+                    const date = new Date(time);
+                    const hourStr = date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true });
+                        console.log(`Datos de hourly is_day: ${hourly.is_day[index]}`);
 
-                     return (
+
+                    return (
                         <div key={time} className={styles["hourly-forecast-item"]}>
-                             <div className={styles["hourly-forecast-inner-container"]}>
-                                <img className={styles["hourly-forecast-image"]} src="/images/icon-sunny.webp" alt="weather icon" />
+                            <div className={styles["hourly-forecast-inner-container"]}>
+                                <img className={styles["hourly-forecast-image"]} src={getWeatherIcon(hourly.weather_code[index], hourly.is_day)}
+                                alt="weather icon" />
                                 <p className={styles["hourly-forecast-hour"]}>{hourStr}</p>
-                             </div>
-                             <p className={styles["hourly-forecast-temp"]}>{Math.round(hourly.temperature_2m[index])}°</p>
+                            </div>
+                            <p className={styles["hourly-forecast-temp"]}>{Math.round(hourly.temperature_2m[index])}°</p>
                         </div>
-                     );
+                    );
                 })}
             </div>
         </aside>

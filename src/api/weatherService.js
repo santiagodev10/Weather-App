@@ -37,7 +37,7 @@ export const fetchWeatherData = async (latitude, longitude) => {
             // Datos actuales
             current: ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "precipitation", "rain", "showers", "weather_code", "wind_speed_10m", "is_day"],
             // Pronóstico por hora (opcionalmente puedes limitar las horas con &forecast_days=1 si quieres menos info)
-            hourly: ["temperature_2m", "weather_code", "precipitation_probability"],
+            hourly: ["temperature_2m", "weather_code", "precipitation_probability", "is_day"],
             // Pronóstico diario
             daily: ["weather_code", "temperature_2m_max", "temperature_2m_min"],
             timezone: "auto" // Importante para que las horas coincidan con la ubicación
