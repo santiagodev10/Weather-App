@@ -1,7 +1,7 @@
 import WeatherHeroCard from "./WeatherHeroCard/WeatherHeroCard";
 import WeatherDetailsGrid from "./WeatherDetailsGrid/WeatherDetailsGrid";
 
-const WeatherSummary = ({ current, location }) => {
+const WeatherSummary = ({ current, location }) => {  
     return (
         <>
             <WeatherHeroCard 
@@ -9,6 +9,7 @@ const WeatherSummary = ({ current, location }) => {
                 temperature={current.temperature_2m}
                 weatherCode={current.weather_code}
                 time={current.time}
+                isDay={current.is_day}
             />
             <WeatherDetailsGrid 
                 feelsLike={current.apparent_temperature}

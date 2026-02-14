@@ -3,9 +3,12 @@ import DaysDropdown from "../../ui/DropdownButton/DaysDropdown";
 
 const HourlyForecast = ({ hourly }) => {
     if (!hourly) return null;
+    console.log(`Datos de hourly: ${hourly}`);
     
     // Mostramos las primeras 24 horas recibidas
     const hoursToShow = hourly.time.slice(15, 23);
+    const weatherCode = hourly.weather_code;
+    console.log(weatherCode);
 
     return (
         <aside>
