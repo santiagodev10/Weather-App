@@ -11,6 +11,7 @@ import useWeather from '../../hooks/UseWeather';
 const Layout = () => {
     const [searchCity, setSearchCity] = useState("Madrid");
     const { weatherData, loading, error } = useWeather(searchCity);
+    
 
     const handleSearch = (city) => {
         setSearchCity(city);
@@ -29,7 +30,7 @@ const Layout = () => {
                         <>
                             <WeatherSummary current={weatherData.current} location={weatherData.location} />
                             <DailyForecast daily={weatherData.daily} />
-                            <HourlyForecast hourly={weatherData.hourly} />
+                            <HourlyForecast hourly={weatherData.hourly} daily={weatherData.daily} />
                         </>
                     )}
                 </div>
