@@ -26,9 +26,9 @@ const Layout = () => {
                     {/* {loading && <p>ESPERANDO...</p>} */}
                     {error && <p>Error: {error}</p>}
 
-                    {weatherData && !loading && (
+                    {weatherData && (
                         <>
-                            <WeatherSummary current={weatherData.current} location={weatherData.location} />
+                            <WeatherSummary current={weatherData.current} location={weatherData.location} isLoading={loading} />
                             <DailyForecast daily={weatherData.daily} />
                             <HourlyForecast hourly={weatherData.hourly} daily={weatherData.daily} />
                         </>
