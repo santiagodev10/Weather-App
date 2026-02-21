@@ -6,17 +6,18 @@ const WeatherSummary = ({ current, location, isLoading }) => {
         <>
             <WeatherHeroCard 
                 location={location} 
-                temperature={current.temperature_2m}
-                weatherCode={current.weather_code}
-                time={current.time}
-                isDay={current.is_day}
+                temperature={current?.temperature_2m}
+                weatherCode={current?.weather_code}
+                time={current?.time}
+                isDay={current?.is_day}
                 isLoading={isLoading}
             />
             <WeatherDetailsGrid 
-                feelsLike={current.apparent_temperature}
-                humidity={current.relative_humidity_2m}
-                wind={current.wind_speed_10m}
-                precipitation={current.precipitation}
+                feelsLike={current?.apparent_temperature}
+                humidity={current?.relative_humidity_2m}
+                wind={current?.wind_speed_10m}
+                precipitation={current?.precipitation}
+                isLoading={isLoading}
             />
         </>
     )
