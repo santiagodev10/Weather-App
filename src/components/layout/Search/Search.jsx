@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import styles from "./Search.module.css"
+import SearchInProgress from './SearchInProgress';
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, isLoading }) => {
     const [inputValue, setInputValue] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+
         if (inputValue.trim()) {
             onSearch(inputValue);
             setInputValue(""); 
@@ -26,6 +29,7 @@ const Search = ({ onSearch }) => {
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                         />
+                        {isLoading && <SearchInProgress />}
                     </div>
                     <button className={styles["search-button"]} type="submit">Search</button>
                 </div>

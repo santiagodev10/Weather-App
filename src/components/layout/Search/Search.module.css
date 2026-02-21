@@ -37,6 +37,7 @@
 .input-container {
     width: 100%;
     max-width: 54rem;
+    position: relative;
 }
 
 .search-button {

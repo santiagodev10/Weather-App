@@ -21,9 +21,9 @@ const Layout = () => {
         <>
             <Header />
             <main>
-                <Search onSearch={handleSearch} />
+                <Search onSearch={handleSearch} isLoading={loading} />
                 <div className={styles["weather-info-wrapper"]}>
-                    {loading && <p>Cargando datos...</p>}
+                    {/* {loading && <p>ESPERANDO...</p>} */}
                     {error && <p>Error: {error}</p>}
 
                     {weatherData && !loading && (
