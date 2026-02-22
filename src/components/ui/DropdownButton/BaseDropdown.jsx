@@ -3,7 +3,7 @@ import styles from "./DropdownButton.module.css";
 
 const iconDropdown = "/images/icon-dropdown.svg";
 
-const BaseDropdown = ({ label, icon, children, colorBackground }) => {
+const BaseDropdown = ({ label, icon, children, colorBackground, hoverBackground }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -12,7 +12,7 @@ const BaseDropdown = ({ label, icon, children, colorBackground }) => {
 
     return (
         <div className={styles["dropdown-container"]}>
-            <button className={`${styles["dropdown-button"]} ${styles[colorBackground]}`} onClick={toggleDropdown} type="button">
+            <button className={`${styles["dropdown-button"]} ${styles[colorBackground]} ${styles[hoverBackground]}`} onClick={toggleDropdown} type="button">
                 {icon && <img className={styles["icon-styles"]} src={icon} alt="Icon" />}
                 {label}
                 <img 

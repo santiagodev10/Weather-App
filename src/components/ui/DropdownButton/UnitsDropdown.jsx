@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./DropdownButton.module.css";
 import BaseDropdown from "./BaseDropdown";
-import DropdownButtonLoading from "./DropdownButtonLoading";
 
 const iconUnits = "/images/icon-units.svg";
 
 const UnitsDropdown = ({ temperature, onSelectTemp, windSpeed, onSelectWind, precipitation, onSelectPrep }) => {
     const [isImperial, setIsImperial] = useState("Switch to Imperial");
-    const [selectedTemp, setSelectedTemp] = useState(null);
-    const [selectedWind, setSelectedWind] = useState(null);
-    const [selectedPrep, setSelectedPrep] = useState(null);
+    const [selectedTemp, setSelectedTemp] = useState("Celsius (°C)");
+    const [selectedWind, setSelectedWind] = useState("km/h");
+    const [selectedPrep, setSelectedPrep] = useState("Millimeters (mm)");
+
+    useEffect(() => {
+        if (selectedTemp === "Fahrenheit (°F)" && selectedWind === "mph" && selectedPrep === "Inches (in)") {
+            setIsImperial("Switch to Metric");
+        } else if (selectedTemp === "Celsius (°C)" && selectedWind === "km/h" && selectedPrep === "Millimeters (mm)") {
+            setIsImperial("Switch to Imperial");
+        }
+    }, [selectedTemp, selectedWind, selectedPrep]);
 
     const handleSelectTemp = (option) => {
         onSelectTemp(option);
@@ -41,7 +48,7 @@ const UnitsDropdown = ({ temperature, onSelectTemp, windSpeed, onSelectWind, pre
     }
 
     return (
-        <BaseDropdown label="Units" icon={iconUnits} colorBackground="color-background-units">
+        <BaseDropdown label="Units" icon={iconUnits} colorBackground="color-background-units" hoverBackground="dropdown-button-units">
             <button className={`${styles["switch-unit-system"]} ${styles["dropdown-item"]}`} onClick={switchUnitSystem}>
                 {isImperial}
             </button>

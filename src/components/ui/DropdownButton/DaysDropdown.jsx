@@ -39,7 +39,7 @@ const DaysDropdown = ({ days = [], onSelectDay, isLoading }) => {
     const selectedDayLabel = getDayName(selectedDay);
 
     return (
-        <BaseDropdown label={isLoading ? <DropdownButtonLoading /> : selectedDayLabel} colorBackground="color-background-days">
+        <BaseDropdown label={isLoading ? <DropdownButtonLoading /> : selectedDayLabel} colorBackground="color-background-days" hoverBackground="dropdown-button-days">
             {days.map((dayDate, index) => {
                 const dayNameDisplay = getDayName(dayDate);
                 const isSelected = selectedDay === dayDate;

@@ -17,6 +17,19 @@
     cursor: pointer;
     border-radius: 5px;
     font-size: 1.4rem;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-button:hover {
+    transform: scale(1.05);
+}
+
+.dropdown-button-units:hover {
+    background-color: var(--Neutral-800);
+}
+
+.dropdown-button-days:hover {
+    background-color: var(--Neutral-700);
 }
 
 .dropdown-menu {
@@ -40,6 +53,11 @@
     border: none;
     cursor: pointer;
     text-align: left;
+}
+
+.switch-unit-system:hover {
+    background-color: var(--Neutral-700);
+    border-radius: 1rem;
 }
 
 .dropdown-item {

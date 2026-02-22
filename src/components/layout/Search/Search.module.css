@@ -28,6 +28,17 @@
     background-repeat: no-repeat;
     background-size: 3.5rem 2rem;
     background-position: 1.2rem center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.field-styles:hover {
+    transform: scale(1.02);
+}
+
+.field-styles:focus {
+    outline: 2px solid var(--Blue-500);
+    outline-offset: 2px;
 }
 
 .field-styles::placeholder {
@@ -52,10 +63,12 @@
     font-family: var(--font-body);
     cursor: pointer;
     transition: background-color 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .search-button:hover {
     background-color: var(--Blue-700);
+    transform: scale(1.05);
 }
 
 @media (min-width: 1024px) {
