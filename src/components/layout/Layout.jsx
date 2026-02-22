@@ -52,9 +52,8 @@ const Layout = () => {
             />
             <main>
                 <Search onSearch={handleSearch} isLoading={loading} />
+                {error && <p className={styles["error-message"]}>No search results found!</p>}
                 <div className={styles["weather-info-wrapper"]}>
-                    {error && <p>Error: {error}</p>}
-
                     {(weatherData || loading) && (
                         <>
                             <WeatherSummary 

@@ -1,3 +1,11 @@
+.error-message {
+    margin-top: 2rem;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--Neutral-200);
+    text-align: center;
+}
+
 @media (min-width: 1024px) {
     .weather-info-wrapper {
         display: grid;
