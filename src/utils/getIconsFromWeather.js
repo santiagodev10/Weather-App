@@ -7,12 +7,12 @@ const weatherCodeMap = {
     // 0: Cielo despejado
     0: { 
         day: '/images/icon-sunny.webp', 
-        night: '/images/icon-sunny.webp' // TODO: Agregar asset para noche clara cuando esté disponible
+        night: '/images/icon-clear-night.webp'
     },
 
     // 1, 2: Mayormente despejado / Parcialmente nublado
-    1: { day: '/images/icon-partly-cloudy.webp', night: '/images/icon-partly-cloudy.webp' },
-    2: { day: '/images/icon-partly-cloudy.webp', night: '/images/icon-partly-cloudy.webp' },
+    1: { day: '/images/icon-partly-cloudy.webp', night: '/images/icon-partly-cloudy-night.webp' },
+    2: { day: '/images/icon-partly-cloudy.webp', night: '/images/icon-partly-cloudy-night.webp' },
     
     // 3: Nublado
     3: { day: '/images/icon-overcast.webp', night: '/images/icon-overcast.webp' },
@@ -27,13 +27,13 @@ const weatherCodeMap = {
     55: { day: '/images/icon-drizzle.webp', night: '/images/icon-drizzle.webp' },
 
     // 61, 63, 65: Lluvia
-    61: { day: '/images/icon-rain.webp', night: '/images/icon-rain.webp' },
-    63: { day: '/images/icon-rain.webp', night: '/images/icon-rain.webp' },
-    65: { day: '/images/icon-rain.webp', night: '/images/icon-rain.webp' },
+    61: { day: '/images/icon-rain.webp', night: '/images/icon-rain-night.webp' },
+    63: { day: '/images/icon-rain.webp', night: '/images/icon-rain-night.webp' },
+    65: { day: '/images/icon-rain.webp', night: '/images/icon-rain-night.webp' },
 
     // 66, 67: Lluvia helada (Usamos rain o snow como fallback, drizzle parece apropiado o rain)
-    66: { day: '/images/icon-rain.webp', night: '/images/icon-rain.webp' },
-    67: { day: '/images/icon-rain.webp', night: '/images/icon-rain.webp' },
+    66: { day: '/images/icon-rain.webp', night: '/images/icon-rain-night.webp' },
+    67: { day: '/images/icon-rain.webp', night: '/images/icon-rain-night.webp' },
 
     // 71, 73, 75, 77: Nieve
     71: { day: '/images/icon-snow.webp', night: '/images/icon-snow.webp' },
