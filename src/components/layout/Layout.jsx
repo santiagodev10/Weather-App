@@ -33,12 +33,10 @@ const Layout = () => {
                                 location={weatherData?.location} 
                                 isLoading={loading} 
                             />
-                            {weatherData && (
-                                <>
-                                    <DailyForecast daily={weatherData.daily} />
-                                    <HourlyForecast hourly={weatherData.hourly} daily={weatherData.daily} />
-                                </>
-                            )}
+                            <>
+                                <DailyForecast daily={weatherData?.daily} isLoading={loading} />
+                                <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} />
+                            </>
                         </>
                     )}
                 </div>
