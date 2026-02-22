@@ -18,3 +18,9 @@
     font-size: var(--font-size-base);
     color: var(--Neutral-200);
 }
+
+@media (min-width: 1024px) {
+    .search-in-progress-container {
+        top: -1rem;
+    }
+}
