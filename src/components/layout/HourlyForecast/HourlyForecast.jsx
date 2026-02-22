@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import styles from "./HourlyForecast.module.css"
 import DaysDropdown from "../../ui/DropdownButton/DaysDropdown";
 import { getWeatherIcon } from "../../../utils/getIconsFromWeather";
+import HourlyForecastLoading from "./HourlyForecastLoading";
 
-const HourlyForecast = ({ hourly, daily }) => {
+const HourlyForecast = ({ hourly, daily, isLoading }) => {
     const [selectedDate, setSelectedDate] = useState(null);
 
     // Seleccionamos el primer día disponible cuando llegan los datos
@@ -13,16 +14,20 @@ const HourlyForecast = ({ hourly, daily }) => {
         }
     }, [daily]);
 
-    if (!hourly || !daily || !selectedDate) return null;
-    console.log(`Hourly.time: ${hourly.time}`);
+    // if (isLoading) return <HourlyForecastLoading />;
+
+    if (!daily && !isLoading) return null;
     
+    // Si estamos cargando y aún no hay datos, usamos valores seguros para renderizar la estructura básica
+    const safeDailyTime = daily ? daily.time : [];
+    const safeHourlyTime = hourly ? hourly.time : [];
 
     // Filtramos los índices:
     // 1. Que correspondan al día seleccionado (startsWith selectedDate)
     // 2. Que la hora esté entre las 15:00 (3 PM) y las 22:00 (10 PM)
-    const filteredIndices = hourly.time
+    const filteredIndices = safeHourlyTime
         .map((time, index) => {
-            if (!time.startsWith(selectedDate)) return -1;
+            if (!selectedDate || !time.startsWith(selectedDate)) return -1;
             
             // time es "2023-10-25T15:00", extraemos la hora
             const hour = parseInt(time.split('T')[1].split(':')[0], 10);
@@ -40,11 +45,17 @@ const HourlyForecast = ({ hourly, daily }) => {
             <h2 className={styles["hourly-forecast-title"]}>Hourly forecast</h2>
             
             <DaysDropdown 
-                days={daily.time} 
-                onSelectDay={(date) => setSelectedDate(date)} 
+                days={safeDailyTime} 
+                onSelectDay={(date) => setSelectedDate(date)}
+                isLoading={isLoading}
             /> 
             
-            <div className={styles["hourly-forecast-container"]}>
+            {isLoading 
+            ? (
+                <HourlyForecastLoading />
+            ) 
+            : (
+                <div className={styles["hourly-forecast-container"]}>
                 {filteredIndices.map((originalIndex) => {
                     const time = hourly.time[originalIndex];
                     const temp = hourly.temperature_2m[originalIndex];
@@ -69,6 +80,7 @@ const HourlyForecast = ({ hourly, daily }) => {
                     );
                 })}
             </div>
+            )}
         </aside>
     )
 }
