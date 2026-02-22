@@ -28,8 +28,15 @@ export const parseInputToCoordenates = async (inputStr) => {
     }
 }
 
-export const fetchWeatherData = async (latitude, longitude) => {
+export const fetchWeatherData = async (latitude, longitude, units = {}) => {
     try {
+        //Valores por defecto para las unidades, en caso de que no se pasen en el objeto units. Si le envías una configuración, por ejemplo { temperature_unit: "fahrenheit" }, la función usará "fahrenheit" para la temperatura, pero mantendrá el viento y la precipitación con sus valores por defecto si no los especificas.
+        const {
+            temperature_unit = "celsius",
+            wind_speed_unit = "kmh",
+            precipitation_unit = "mm"
+        } = units;
+
         // Configuramos los parámetros para: Temp actual, sensación, humedad, viento, precipitación, pronóstico diario y por hora
         const params = new URLSearchParams({
             latitude: latitude,
@@ -40,7 +47,10 @@ export const fetchWeatherData = async (latitude, longitude) => {
             hourly: ["temperature_2m", "weather_code", "precipitation_probability", "is_day"],
             // Pronóstico diario
             daily: ["weather_code", "temperature_2m_max", "temperature_2m_min"],
-            timezone: "auto" // Importante para que las horas coincidan con la ubicación
+            timezone: "auto", // Importante para que las horas coincidan con la ubicación
+            temperature_unit,
+            wind_speed_unit,
+            precipitation_unit
         });        
 
         const response = await fetch(`${API_URL}?${params.toString()}`);

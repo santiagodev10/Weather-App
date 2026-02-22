@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { parseInputToCoordenates, fetchWeatherData } from '../api/weatherService';
 
-const useWeather = (city) => {
+const useWeather = (city, units) => {
     const [weatherData, setWeatherData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,18 +22,21 @@ const useWeather = (city) => {
                     throw new Error("No se pudo encontrar la ubicación.");
                 }
 
-                // 2. Usar esas coordenadas para obtener el clima
-                const weather = await fetchWeatherData(coords.latitude, coords.longitude);
+                // 2. Usar esas coordenadas Y LAS UNIDADES para obtener el clima
+                const weather = await fetchWeatherData(coords.latitude, coords.longitude, units);
 
                 // 3. Guardar todo junto. 
                 // Es útil mezclar los datos del clima con los datos de la ciudad (nombre, país) 
                 // para mostrarlos en el título de la UI.
+                //setWeatherData modifica el estado de weatherData, el cual se esta enviando a los componentes
                 setWeatherData({
                     ...weather,
                     location: {
                         name: coords.name, 
                         country: coords.country
-                    }
+                    },
+                    // Guardamos la configuración de unidades actual en la respuesta para referencia si es necesario
+                    unitsConfig: weather.current_units 
                 });
                 
             } catch (err) {
@@ -45,7 +48,7 @@ const useWeather = (city) => {
         };
 
         getWeather();
-    }, [city]);
+    }, [city, units]);
 
     return { weatherData, loading, error };
 };

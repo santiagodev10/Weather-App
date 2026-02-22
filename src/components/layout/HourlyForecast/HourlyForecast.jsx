@@ -4,8 +4,9 @@ import DaysDropdown from "../../ui/DropdownButton/DaysDropdown";
 import { getWeatherIcon } from "../../../utils/getIconsFromWeather";
 import HourlyForecastLoading from "./HourlyForecastLoading";
 
-const HourlyForecast = ({ hourly, daily, isLoading }) => {
+const HourlyForecast = ({ hourly, daily, isLoading, units }) => {
     const [selectedDate, setSelectedDate] = useState(null);
+    const tempSymbol = units?.temperature_unit === 'fahrenheit' ? '°F' : '°C';
 
     // Seleccionamos el primer día disponible cuando llegan los datos
     useEffect(() => {
@@ -75,7 +76,7 @@ const HourlyForecast = ({ hourly, daily, isLoading }) => {
                                 />
                                 <p className={styles["hourly-forecast-hour"]}>{hourStr}</p>
                             </div>
-                            <p className={styles["hourly-forecast-temp"]}>{Math.round(temp)}°</p>
+                            <p className={styles["hourly-forecast-temp"]}>{Math.round(temp)}{tempSymbol}</p>
                         </div>
                     );
                 })}

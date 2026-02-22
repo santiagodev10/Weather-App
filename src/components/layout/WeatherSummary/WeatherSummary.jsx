@@ -1,7 +1,7 @@
 import WeatherHeroCard from "./WeatherHeroCard/WeatherHeroCard";
 import WeatherDetailsGrid from "./WeatherDetailsGrid/WeatherDetailsGrid";
 
-const WeatherSummary = ({ current, location, isLoading }) => {  
+const WeatherSummary = ({ current, location, isLoading, units }) => {  
     return (
         <>
             <WeatherHeroCard 
@@ -11,6 +11,7 @@ const WeatherSummary = ({ current, location, isLoading }) => {
                 time={current?.time}
                 isDay={current?.is_day}
                 isLoading={isLoading}
+                units={units}
             />
             <WeatherDetailsGrid 
                 feelsLike={current?.apparent_temperature}
@@ -18,6 +19,7 @@ const WeatherSummary = ({ current, location, isLoading }) => {
                 wind={current?.wind_speed_10m}
                 precipitation={current?.precipitation}
                 isLoading={isLoading}
+                units={units}
             />
         </>
     )

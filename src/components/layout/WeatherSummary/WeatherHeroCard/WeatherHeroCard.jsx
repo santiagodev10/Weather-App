@@ -2,7 +2,7 @@ import styles from "./WeatherHeroCard.module.css"
 import { getWeatherIcon } from "../../../../utils/getIconsFromWeather";
 import WeatherHeroCardLoading from "./WeatherHeroCardLoading";
 
-const WeatherHeroCard = ({ location, temperature, weatherCode, time, isDay, isLoading }) => {
+const WeatherHeroCard = ({ location, temperature, weatherCode, time, isDay, isLoading, units }) => {
     // Formatear la fecha. Ejemplo: "Tuesday, Aug 5, 2025"
     const date = new Date(); // Usamos fecha actual del cliente o parseamos 'time' si viene del API
     const formattedDate = date.toLocaleDateString('en-US', {
@@ -11,6 +11,8 @@ const WeatherHeroCard = ({ location, temperature, weatherCode, time, isDay, isLo
         month: 'short',
         day: 'numeric'
     });
+
+    const tempSymbol = units?.temperature_unit === 'fahrenheit' ? '°F' : '°C';
 
     console.log(`Datos de current weatherCode: ${weatherCode}`);
     console.log(`Datos de current isDay: ${isDay}`);
@@ -28,7 +30,7 @@ const WeatherHeroCard = ({ location, temperature, weatherCode, time, isDay, isLo
                 </div>
                 <div className={styles["temperature-container"]}>
                     {/* Math.round para quitar decimales si se prefiere */}
-                    <h4 className={styles["weather-temperature"]}>{Math.round(temperature)}°</h4>
+                    <h4 className={styles["weather-temperature"]}>{Math.round(temperature)}{tempSymbol}</h4>
                     <figure className={styles["weather-image-container"]}>
                         {/* TODO: Usar weatherCode para elegir la imagen correcta */}
                         <img className={styles["weather-image"]} src={getWeatherIcon(weatherCode, isDay)} alt="weather image" />
