@@ -19,7 +19,7 @@ const Layout = () => {
 
     return (
         <>
-            <Header />
+            <Header isLoading={loading} />
             <main>
                 <Search onSearch={handleSearch} isLoading={loading} />
                 <div className={styles["weather-info-wrapper"]}>

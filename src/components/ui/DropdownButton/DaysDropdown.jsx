@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from "./DropdownButton.module.css";
 import BaseDropdown from "./BaseDropdown";
+import DropdownButtonLoading from "./DropdownButtonLoading";
 
-const DaysDropdown = ({ days = [], onSelectDay }) => {
+const DaysDropdown = ({ days = [], onSelectDay, isLoading }) => {
     
     // Función auxiliar para obtener el nombre del día desde la fecha (ej: "Tuesday")
     const getDayName = (dateString) => {
@@ -33,12 +34,12 @@ const DaysDropdown = ({ days = [], onSelectDay }) => {
     };
 
     // Si no hay días cargados todavía, no mostramos nada o un estado de carga
-    if (!days || days.length === 0) return null;
+    if ((!days || days.length === 0) && !isLoading) return null;
 
     const selectedDayLabel = getDayName(selectedDay);
 
     return (
-        <BaseDropdown label={selectedDayLabel} colorBackground="color-background-days">
+        <BaseDropdown label={isLoading ? <DropdownButtonLoading /> : selectedDayLabel} colorBackground="color-background-days">
             {days.map((dayDate, index) => {
                 const dayNameDisplay = getDayName(dayDate);
                 const isSelected = selectedDay === dayDate;

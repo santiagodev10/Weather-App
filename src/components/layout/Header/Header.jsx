@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 import UnitsDropdown from '../../ui/DropdownButton/UnitsDropdown';
 
-const Header = () => {
+const Header = ({ isLoading }) => {
     return (
         <header className={styles['header-container']}>
             <img className={styles.logo} src="/images/logo.svg" alt="Weather App Logo" />
@@ -12,6 +12,7 @@ const Header = () => {
                 onSelectWind={(windSelect) => console.log(`Selected wind speed unit: ${windSelect}`)}
                 precipitation={["Millimeters (mm)", "Inches (in)"]}
                 onSelectPrep={(precipitationSelect) => console.log(`Selected precipitation unit: ${precipitationSelect}`)}
+                isLoading={isLoading}
             />
         </header>
     )

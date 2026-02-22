@@ -1,10 +1,11 @@
 import { useState } from "react";
 import styles from "./DropdownButton.module.css";
 import BaseDropdown from "./BaseDropdown";
+import DropdownButtonLoading from "./DropdownButtonLoading";
 
 const iconUnits = "/images/icon-units.svg";
 
-const UnitsDropdown = ({ temperature, onSelectTemp, windSpeed, onSelectWind, precipitation, onSelectPrep }) => {
+const UnitsDropdown = ({ temperature, onSelectTemp, windSpeed, onSelectWind, precipitation, onSelectPrep, isLoading }) => {
     const [isImperial, setIsImperial] = useState("Switch to Imperial");
     const [selectedTemp, setSelectedTemp] = useState(null);
     const [selectedWind, setSelectedWind] = useState(null);
@@ -40,7 +41,7 @@ const UnitsDropdown = ({ temperature, onSelectTemp, windSpeed, onSelectWind, pre
     }
 
     return (
-        <BaseDropdown label="Units" icon={iconUnits} colorBackground="color-background-units">
+        <BaseDropdown label={isLoading ? <DropdownButtonLoading /> : "Units"} icon={iconUnits} colorBackground="color-background-units">
             <button className={`${styles["switch-unit-system"]} ${styles["dropdown-item"]}`} onClick={switchUnitSystem}>
                 {isImperial}
             </button>

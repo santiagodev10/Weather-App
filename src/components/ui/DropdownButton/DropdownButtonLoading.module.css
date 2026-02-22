@@ -1,0 +1,19 @@
+.skeleton-dropdown {
+    width: 1.6rem;
+    height: 0.5rem;
+    border-radius: 0.8rem;
+    background-color: var(--Neutral-200);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

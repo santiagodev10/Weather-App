@@ -10,9 +10,6 @@ const DailyForecast = ({ daily, isLoading }) => {
         return date.toLocaleDateString("en-US", { weekday: "short" });
     };
 
-    console.log(`Datos de daily: ${daily.weather_code}`);
-    
-
     return (
         <section className={styles["daily-forecast-section"]}>
             <h2 className={styles["daily-forecast-title"]}>Daily forecast</h2>
