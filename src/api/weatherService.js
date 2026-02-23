@@ -9,22 +9,16 @@ export const parseInputToCoordenates = async (inputStr) => {
     if(!inputStr) console.log("No existe");
 
     try {
-        const response = await fetch(`${API_GEOCODING}?name=${inputStr}&count=10&format=json`);
+        const response = await fetch(`${API_GEOCODING}?name=${inputStr}&count=5&format=json`);
         const data = await response.json();
-        console.log(data.results[0]);
-        const latitude = data.results[0].latitude;
-        const longitude = data.results[0].longitude;
-        const name = data.results[0].name;
-        const country = data.results[0].country;
-
-        return {
-            latitude,
-            longitude,
-            name,
-            country
-        };
+        
+        // Retornamos la lista completa de resultados o un array vacío si no hay coincidencias
+        if (!data.results) return [];
+        
+        return data.results;
     } catch (error) {
         console.log(error);
+        return [];
     }
 }
 

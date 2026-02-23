@@ -15,12 +15,16 @@ const useWeather = (city, units) => {
             setError(null);
 
             try {
-                // 1. Obtener coordenadas
-                const coords = await parseInputToCoordenates(city);
+                // 1. Obtener coordenadas (ahora devuelve un array)
+                const candidates = await parseInputToCoordenates(city);
 
-                if (!coords) {
+                // Verificamos si hay al menos un candidato
+                if (!candidates || candidates.length === 0) {
                     throw new Error("No se pudo encontrar la ubicación.");
                 }
+
+                // Tomamos el primer resultado como la opción por defecto
+                const coords = candidates[0];
 
                 // 2. Usar esas coordenadas Y LAS UNIDADES para obtener el clima
                 const weather = await fetchWeatherData(coords.latitude, coords.longitude, units);

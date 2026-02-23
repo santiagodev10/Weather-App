@@ -1,17 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "./Search.module.css"
 import SearchInProgress from './SearchInProgress';
+import useAutocomplete from '../../../hooks/UseAutocomplete';
 
 const Search = ({ onSearch, isLoading }) => {
     const [inputValue, setInputValue] = useState("");
+    const [selectedIndex, setSelectedIndex] = useState(-1);
+    const [showSuggestions, setShowSuggestions] = useState(true); // Controlar visibilidad
+    const { suggestions, loading: suggestionsLoading, error: suggestionsError } = useAutocomplete(inputValue);
+    
+    // Resetear el índice y mostrar sugerencias cuando el input cambia
+    useEffect(() => {
+        setSelectedIndex(-1);
+        setShowSuggestions(true);
+    }, [inputValue, suggestions]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-
+        // Si el usuario presiona Enter, usamos el valor del input directamente
         if (inputValue.trim()) {
             onSearch(inputValue);
-            setInputValue(""); 
+            setInputValue("");
+            setShowSuggestions(false);
+        }
+    };
+
+    const handleSelectSuggestion = (suggestion) => {
+        // Al seleccionar una sugerencia, usamos el nombre y país para buscar
+        onSearch(`${suggestion.name}, ${suggestion.country}`);
+        setInputValue("");
+        setSelectedIndex(-1);
+        setShowSuggestions(false);
+    };
+
+    const handleKeyDown = (e) => {
+        // Si no hay sugerencias visibles, no hacemos nada especial
+        if (!showSuggestions || !suggestions || suggestions.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault(); // Evitar mover el cursor en el input
+            setSelectedIndex(prev => (prev < suggestions.length - 1 ? prev + 1 : prev));
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1));
+        } else if (e.key === 'Enter') {
+            if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+                e.preventDefault(); // Evitar el submit del formulario
+                handleSelectSuggestion(suggestions[selectedIndex]);
+            }
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            setShowSuggestions(false); // Solo ocultamos la lista
         }
     };
 
@@ -28,7 +67,31 @@ const Search = ({ onSearch, isLoading }) => {
                             placeholder="Search for a place..." 
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            onFocus={() => setShowSuggestions(true)} // Volver a mostrar al enfocar
                         />
+                        
+                        {/* Lista de sugerencias: Solamente muestra el contenedor ... */}
+                        {inputValue && showSuggestions && (suggestionsLoading || suggestionsError || suggestions.length > 0) && (
+                            <ul className={styles.suggestionsList}>
+                                {suggestionsLoading && <li className={styles.loadingItem}>Loading...</li>}
+                                
+                                {!suggestionsLoading && suggestionsError && (
+                                    <li className={styles.errorItem}>{suggestionsError}</li>
+                                )}
+
+                                {!suggestionsLoading && suggestions.map((suggestion, index) => (
+                                    <li 
+                                        key={suggestion.id} 
+                                        onClick={() => handleSelectSuggestion(suggestion)}
+                                        className={`${styles.suggestionItem} ${index === selectedIndex ? styles.selected : ''}`}
+                                    >
+                                        {suggestion.name}, {suggestion.country || ''} {suggestion.admin1 ? `(${suggestion.admin1})` : ''}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
                         {isLoading && <SearchInProgress />}
                     </div>
                     <button className={styles["search-button"]} type="submit">Search</button>
