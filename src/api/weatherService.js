@@ -9,7 +9,7 @@ export const parseInputToCoordenates = async (inputStr) => {
     if(!inputStr) console.log("No existe");
 
     try {
-        const response = await fetch(`${API_GEOCODING}?name=${inputStr}&count=5&format=json`);
+        const response = await fetch(`${API_GEOCODING}?name=${inputStr}&count=8&format=json`);
         const data = await response.json();
         
         // Retornamos la lista completa de resultados o un array vacío si no hay coincidencias

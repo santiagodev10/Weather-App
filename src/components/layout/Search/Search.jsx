@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from "./Search.module.css"
 import SearchInProgress from './SearchInProgress';
 import useAutocomplete from '../../../hooks/UseAutocomplete';
@@ -8,6 +8,24 @@ const Search = ({ onSearch, isLoading }) => {
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [showSuggestions, setShowSuggestions] = useState(true); // Controlar visibilidad
     const { suggestions, loading: suggestionsLoading, error: suggestionsError } = useAutocomplete(inputValue);
+    const suggestionsListRef = useRef(null);
+
+    // Scroll automático al elemento seleccionado
+    useEffect(() => {
+        if (selectedIndex >= 0 && suggestionsListRef.current) {
+            const listItems = suggestionsListRef.current.children;
+            // Asegurarse de que el índice es válido y no contamos el loader/error
+            // (El loader/error son li, así que debemos tener cuidado si aparecen)
+            // En mi lógica actual, si hay loading/error, no hay navegación por flechas, así que es seguro.
+            
+            if (listItems[selectedIndex]) {
+                listItems[selectedIndex].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest', // Scroll mínimo necesario para mostrarlo
+                });
+            }
+        }
+    }, [selectedIndex]);
     
     // Resetear el índice y mostrar sugerencias cuando el input cambia
     useEffect(() => {
@@ -73,7 +91,7 @@ const Search = ({ onSearch, isLoading }) => {
                         
                         {/* Lista de sugerencias: Solamente muestra el contenedor ... */}
                         {inputValue && showSuggestions && (suggestionsLoading || suggestionsError || suggestions.length > 0) && (
-                            <ul className={styles.suggestionsList}>
+                            <ul ref={suggestionsListRef} className={styles.suggestionsList}>
                                 {suggestionsLoading && <li className={styles.loadingItem}>Loading...</li>}
                                 
                                 {!suggestionsLoading && suggestionsError && (
