@@ -47,6 +47,24 @@ body {
     padding: 2rem;
 }
 
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--Neutral-800);
+    border-radius: 0 1rem 1rem 0;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--Blue-500);
+    border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--Blue-700);
+}
+
 @media (min-width: 1024px) {
     body {
         padding: 4rem 10rem;
