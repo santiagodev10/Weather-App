@@ -23,10 +23,10 @@
 /* Estilos de la lista de sugerencias */
 .suggestionsList {
     position: absolute;
-    top: 240%; /* Justo debajo del input */
+    top: 250%; /* Justo debajo del input - cambiado de 240% a 110% para que no quede tan lejos */
     left: 0;
     width: 100%; /* Que ocupe el mismo ancho que el input container */
-    background-color: var(--Neutral-700); /* Un poco más claro que el fondo del input */
+    background-color: var(--Neutral-800); /* Mismo tono que input */
     border: 1px solid var(--Neutral-600);
     border-radius: 1rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
@@ -46,6 +46,86 @@
 .suggestionsList::-webkit-scrollbar-track {
     background: var(--Neutral-800);
     border-radius: 0 1rem 1rem 0;
+}
+
+.suggestionsList::-webkit-scrollbar-thumb {
+    background-color: var(--Neutral-500);
+    border-radius: 4px;
+    border: 2px solid var(--Neutral-800);
+}
+
+.suggestionItem {
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    color: var(--Neutral-400);
+    transition: background-color 0.2s ease;
+    font-size: var(--font-size-m);
+}
+
+.suggestionItem:hover,
+.suggestionItem.selected {
+    background-color: var(--Neutral-700);
+}
+
+.loadingItem, .errorItem {
+    padding: 1rem;
+    color: var(--Neutral-300);
+    text-align: center;
+    font-size: var(--font-size-m);
+}
+
+.errorItem {
+    color: var(--Danger-300);
+}
+
+.field-styles {
+    background-color: var(--Neutral-800);
+    border-radius: 1.25rem;
+    border: none;
+    padding: 1.25rem;
+    width: 100%;
+    max-width: 54rem;
+    color: var(--Neutral-400);
+    font-size: var(--font-size-m);
+    outline: none;
+}
+
+.field-styles::placeholder {
+    color: var(--Neutral-400); 
+}
+
+.search-button {
+    font-weight: 700;
+    border-radius: 1.25rem;
+    background-color: var(--Neutral-800);
+    border: none;
+    font-size: var(--font-size-m);
+    color: var(--Neutral-200);
+    width: 100%;
+    max-width: 54rem;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.search-button:hover {
+    background-color: var(--Neutral-700);
+}
+
+.search-button:active {
+    transform: scale(0.98);
+}
+
+.historyTitle {
+    color: var(--Neutral-400);
+    opacity: 0.7;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
 }
 
 .suggestionsList::-webkit-scrollbar-thumb {

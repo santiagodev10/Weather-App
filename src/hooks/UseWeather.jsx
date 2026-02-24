@@ -37,7 +37,11 @@ const useWeather = (city, units) => {
                     ...weather,
                     location: {
                         name: coords.name, 
-                        country: coords.country
+                        country: coords.country,
+                        id: coords.id,
+                        admin1: coords.admin1,
+                        lat: coords.latitude,
+                        lon: coords.longitude
                     },
                     // Guardamos la configuración de unidades actual en la respuesta para referencia si es necesario
                     unitsConfig: weather.current_units 

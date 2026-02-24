@@ -2,11 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import styles from "./Search.module.css"
 import SearchInProgress from './SearchInProgress';
 import useAutocomplete from '../../../hooks/UseAutocomplete';
+import { useSearchHistory } from '../../../hooks/UseSearchHistory';
 
 const Search = ({ onSearch, isLoading }) => {
     const [inputValue, setInputValue] = useState("");
     const [selectedIndex, setSelectedIndex] = useState(-1);
-    const [showSuggestions, setShowSuggestions] = useState(true); // Controlar visibilidad
+    const [showSuggestions, setShowSuggestions] = useState(false); // Controlar visibilidad
+    const [isFocused, setIsFocused] = useState(false); // Nuevo estado para controlar el foco
+    const { history, addToHistory } = useSearchHistory(); 
     const { suggestions, loading: suggestionsLoading, error: suggestionsError } = useAutocomplete(inputValue);
     const suggestionsListRef = useRef(null);
 
@@ -38,16 +41,39 @@ const Search = ({ onSearch, isLoading }) => {
         // Si el usuario presiona Enter, usamos el valor del input directamente
         if (inputValue.trim()) {
             onSearch(inputValue);
+            // NOTA: Ya no guardamos aquí directamente para evitar guardar búsquedas erróneas.
+            // El guardado exitoso se manejará en el componente padre (Layout) o hook de weather
+            // cuando la API responda correctamente.
+            
             setInputValue("");
             setShowSuggestions(false);
+            setIsFocused(false); // Quitamos foco para ocultar historial
         }
     };
 
     const handleSelectSuggestion = (suggestion) => {
         // Al seleccionar una sugerencia, usamos el nombre y país para buscar
-        onSearch(`${suggestion.name}, ${suggestion.country}`);
+        const searchTerm = `${suggestion.name}, ${suggestion.country || ''}`;
+        onSearch(searchTerm);
+        
+        // Almacenar sugerencia en historial
+        // addToHistory(suggestion); // NOTA: Deshabilitado para centralizar el guardado en Layout
+
         setInputValue("");
         setSelectedIndex(-1);
+        setShowSuggestions(false);
+    };
+
+    const handleHistorySelect = (historyItem) => {
+        // Si es manual, usamos el nombre, si es objeto completo, usamos la lógica de sugerencia
+        if (historyItem.isManual) {
+            onSearch(historyItem.name);
+        } else {
+            const searchTerm = `${historyItem.name}, ${historyItem.country || ''}`;
+            onSearch(searchTerm);
+        }
+        // No llamamos a addToHistory aquí porque Layout se encargará cuando la búsqueda sea exitosa
+        
         setShowSuggestions(false);
     };
 
@@ -72,6 +98,14 @@ const Search = ({ onSearch, isLoading }) => {
         }
     };
 
+    const handleBlur = () => {
+        // Pequeño delay para permitir clic en el historial antes de cerrar
+        setTimeout(() => {
+            setIsFocused(false);
+            setShowSuggestions(false);
+        }, 200);
+    };
+
     return (
         <>
             <h1 className={styles.title}>How's the sky looking today</h1>
@@ -86,7 +120,11 @@ const Search = ({ onSearch, isLoading }) => {
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            onFocus={() => setShowSuggestions(true)} // Volver a mostrar al enfocar
+                            onFocus={() => {
+                                setIsFocused(true);
+                                setShowSuggestions(true);
+                            }}
+                            onBlur={handleBlur}
                         />
                         
                         {/* Lista de sugerencias: Solamente muestra el contenedor ... */}
@@ -101,13 +139,33 @@ const Search = ({ onSearch, isLoading }) => {
                                 {!suggestionsLoading && suggestions.map((suggestion, index) => (
                                     <li 
                                         key={suggestion.id} 
-                                        onClick={() => handleSelectSuggestion(suggestion)}
+                                        // Usamos onMouseDown en lugar de onClick para evitar que el blur ocurra antes
+                                        onMouseDown={() => handleSelectSuggestion(suggestion)}
                                         className={`${styles.suggestionItem} ${index === selectedIndex ? styles.selected : ''}`}
                                     >
                                         {suggestion.name}, {suggestion.country || ''} {suggestion.admin1 ? `(${suggestion.admin1})` : ''}
                                     </li>
                                 ))}
                             </ul>
+                        )}
+
+                        {/* Mostrar historial si no hay input y tenemos foco */}
+                        {!inputValue && isFocused && history.length > 0 && (
+                            <div className={styles.suggestionsList}>
+                                <p className={styles.historyTitle}>Últimas búsquedas</p>
+                                <ul>
+                                    {history.map((item, index) => (
+                                        <li 
+                                            key={item.id || index}
+                                            onMouseDown={() => handleHistorySelect(item)}
+                                            className={styles.suggestionItem}
+                                        >
+                                            <span style={{ marginRight: '8px' }}>📍</span>
+                                            {item.isManual ? item.name : `${item.name}, ${item.country || ''}`}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         )}
 
                         {isLoading && <SearchInProgress />}

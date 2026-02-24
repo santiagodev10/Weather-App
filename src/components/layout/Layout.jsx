@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "./Layout.module.css"
 import Header from './Header/Header';
 import Search  from './Search/Search';
@@ -6,6 +6,7 @@ import WeatherSummary from './WeatherSummary/WeatherSummary';
 import DailyForecast from './DailyForecast/DailyForecast';
 import HourlyForecast from './HourlyForecast/HourlyForecast';
 import useWeather from '../../hooks/UseWeather';
+import { useSearchHistory } from '../../hooks/UseSearchHistory';
 
 
 const Layout = () => {
@@ -17,7 +18,25 @@ const Layout = () => {
     });
 
     const { weatherData, loading, error } = useWeather(searchCity, units);
+    const { addToHistory } = useSearchHistory();
     
+    // Efecto para guardar en el historial solo cuando la carga es exitosa y hay datos
+    useEffect(() => {
+        if (!loading && !error && weatherData?.location) {
+            const location = weatherData.location;
+            // Guardamos con un formato consistente
+            // Usamos 'id' basado en el ID de la API si existe, o generamos uno único combinando coords
+            const historyItem = {
+                id: location.id || `${location.lat}-${location.lon}`,
+                name: location.name,
+                country: location.country,
+                admin1: location.admin1,
+                isManual: false // Ahora todas las que vienen de la API son "validadas"
+            };
+            addToHistory(historyItem);
+        }
+    }, [weatherData, loading, error]); // Se ejecuta cuando cambia el estado de la carga
+
 
     const handleSearch = (city) => {
         setSearchCity(city);
