@@ -17,7 +17,7 @@ const useSearchLists = (inputValue, isFocused) => {
         return history.map((h, i) => ({
             id: `hist-${h.id || i}`, // IDs únicos
             mainText: h.isManual ? h.name : `${h.name}, ${h.country || ''}`,
-            subText: 'Reciente',
+            subText: 'Recently',
             isHistory: true,
             searchTerm: h.name // Término limpio para buscar
         }));
@@ -130,7 +130,7 @@ const Search = ({ onSearch, isLoading }) => {
                             <div className={styles.suggestionsList}>
                                 
                                 {/* CABECERA OPCIONAL PARA HISTORIAL */}
-                                {mode === 'history' && <p className={styles.historyTitle}>Últimas búsquedas</p>}
+                                {mode === 'history' && <p className={styles.historyTitle}>Last searches</p>}
 
                                 <ul ref={listRef}>
                                     {activeList.map((item, index) => (
