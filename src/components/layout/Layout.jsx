@@ -7,10 +7,14 @@ import DailyForecast from './DailyForecast/DailyForecast';
 import HourlyForecast from './HourlyForecast/HourlyForecast';
 import useWeather from '../../hooks/UseWeather';
 import { useSearchHistory } from '../../hooks/UseSearchHistory';
+import { getSearchHistory } from '../../utils/localStorageService';
 
 
 const Layout = () => {
-    const [searchCity, setSearchCity] = useState("Madrid");
+    const [searchCity, setSearchCity] = useState(() => {
+        const history = getSearchHistory();
+        return history.length > 0 ? history[0].name : "";
+    });
     const [units, setUnits] = useState({
         temperature_unit: "celsius",
         wind_speed_unit: "kmh",
@@ -72,22 +76,31 @@ const Layout = () => {
             <main>
                 <Search onSearch={handleSearch} isLoading={loading} />
                 {error && <p className={styles["error-message"]}>No search results found!</p>}
-                <div className={styles["weather-info-wrapper"]}>
-                    {(weatherData || loading) && (
-                        <>
-                            <WeatherSummary 
-                                current={weatherData?.current} 
-                                location={weatherData?.location} 
-                                isLoading={loading} 
-                                units={units}
-                            />
+                
+                {!searchCity ? (
+                    <div className={styles["welcome-message-container"]}>
+                        <h2 className={styles["welcome-message"]}>Welcome to Weather Now! 🌤️</h2>
+                        <p className={styles["welcome-paragraph"]}>Search for a city to see the forecast</p>
+                    </div>
+                ) : (
+                    <div className={styles["weather-info-wrapper"]}>
+                    
+                        {(weatherData || loading) && (
                             <>
-                                <DailyForecast daily={weatherData?.daily} isLoading={loading} units={units} />
-                                <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} units={units} />
+                                <WeatherSummary 
+                                    current={weatherData?.current} 
+                                    location={weatherData?.location} 
+                                    isLoading={loading} 
+                                    units={units}
+                                />
+                                <>
+                                    <DailyForecast daily={weatherData?.daily} isLoading={loading} units={units} />
+                                    <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} units={units} />
+                                </>
                             </>
-                        </>
-                    )}
-                </div>
+                        )}
+                    </div>
+                )}
             </main>
         </>
     );
