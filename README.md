@@ -53,8 +53,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Frontend Mentor URL](https://www.frontendmentor.io/solutions/weather-react-app-kernDrVEmr)
+- Live Site URL: [Weather App](https://weather-app-nine-chi-37.vercel.app/)
 
 ## My process
 
