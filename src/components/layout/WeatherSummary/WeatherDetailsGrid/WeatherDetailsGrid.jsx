@@ -19,11 +19,11 @@ const WeatherDetailsGrid = ({ feelsLike, humidity, wind, precipitation, isLoadin
             </div>
             <div className={styles["data-container"]}>
                 <p className={styles["data-item"]}>Wind</p>
-                <div className={styles["data-value"]}>{isLoading ? <WeatherDetailsGridLoading /> : `${wind}${windUnit}`}</div>
+                <div className={styles["data-value"]}>{isLoading ? <WeatherDetailsGridLoading /> : `${wind} ${windUnit}`}</div>
             </div>
             <div className={styles["data-container"]}>
                 <p className={styles["data-item"]}>Precipitation</p>
-                <div className={styles["data-value"]}>{isLoading ? <WeatherDetailsGridLoading /> : `${precipitation}${prepUnit}`}</div>
+                <div className={styles["data-value"]}>{isLoading ? <WeatherDetailsGridLoading /> : `${precipitation} ${prepUnit}`}</div>
             </div>
         </section>
     )

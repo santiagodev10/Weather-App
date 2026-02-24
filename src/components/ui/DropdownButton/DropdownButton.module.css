@@ -55,16 +55,17 @@
     text-align: left;
 }
 
-.switch-unit-system:hover {
-    background-color: var(--Neutral-700);
-    border-radius: 1rem;
-}
-
 .dropdown-item {
     font-size: 1.4rem;
     padding: 0.6rem;
     color: var(--Neutral-0);
     cursor: pointer;
+}
+
+.switch-unit-system:hover, 
+.dropdown-item:hover {
+    background-color: var(--Neutral-700);
+    border-radius: 1rem;
 }
 
 .dropdown-item-selected {
