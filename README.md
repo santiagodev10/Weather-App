@@ -48,9 +48,7 @@ Users should be able to:
 
 ### Screenshot
 
-Desktop image:
 ![Desktop image](./public/screenshot-desktop-weather-app.jpg)
-Mobile image:
 ![Mobile image](./public/screenshot-mobile-weather-app.jpg)
 
 ### Links
