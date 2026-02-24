@@ -73,7 +73,11 @@ const Layout = () => {
                     prep: handlePrepChange
                 }}
             />
-            <main>                
+            <main>
+                {!errorServer && (
+                    <Search key="search-bar" onSearch={handleSearch} isLoading={loading} />
+                )}
+
                 {errorResults && (
                     <p className={styles["error-message"]}>{errorResults}</p>
                 )}
@@ -99,22 +103,18 @@ const Layout = () => {
                     <>
                         {/* Solo mostramos el contenido si hay datos o está cargando, PERO NO si hay error de servidor */}
                         {!errorServer && !errorResults && (weatherData || loading) && (
-                            <>
-                                <Search onSearch={handleSearch} isLoading={loading} />
-
-                                <div className={styles["weather-info-wrapper"]}>
-                                    <WeatherSummary 
-                                        current={weatherData?.current} 
-                                        location={weatherData?.location} 
-                                        isLoading={loading} 
-                                        units={units}
-                                    />
-                                    <>
-                                        <DailyForecast daily={weatherData?.daily} isLoading={loading} units={units} />
-                                        <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} units={units} />
-                                    </>
-                                </div>
-                            </>
+                            <div className={styles["weather-info-wrapper"]}>
+                                <WeatherSummary 
+                                    current={weatherData?.current} 
+                                    location={weatherData?.location} 
+                                    isLoading={loading} 
+                                    units={units}
+                                />
+                                <>
+                                    <DailyForecast daily={weatherData?.daily} isLoading={loading} units={units} />
+                                    <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} units={units} />
+                                </>
+                            </div>
                         )}
                     </>
                 )}
