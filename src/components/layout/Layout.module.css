@@ -27,6 +27,53 @@
     max-width: 400px;
 }
 
+.server-error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 10rem;
+}
+
+.server-icon-error {
+    width: clamp(2rem, 5vw, 4rem);
+    fill: var(--Neutral-200);
+}
+
+.server-error-title {
+    font-size: clamp(var(--font-size-lg), 5vw, var(--font-size-xl));
+    font-weight: 700;
+    color: var(--Neutral-200);
+    text-align: center;
+}
+
+.server-error-message {
+    font-size: clamp(var(--font-size-sm), 2vw, var(--font-size-base));
+    color: var(--Neutral-200);
+    max-width: 40rem;
+    text-align: center;
+}
+
+.server-error-retry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: var(--font-size-sm);
+    color: var(--Neutral-200);
+    background-color: var(--Neutral-800);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.server-error-retry:hover {
+    background-color: var(--Neutral-600);
+    transform: scale(1.05);
+}
+
 @media (min-width: 1024px) {
     .weather-info-wrapper {
         display: grid;

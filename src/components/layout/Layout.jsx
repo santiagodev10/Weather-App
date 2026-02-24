@@ -21,12 +21,12 @@ const Layout = () => {
         precipitation_unit: "mm"
     });
 
-    const { weatherData, loading, error } = useWeather(searchCity, units);
+    const { weatherData, loading, errorResults, errorServer } = useWeather(searchCity, units);
     const { addToHistory } = useSearchHistory();
     
     // Efecto para guardar en el historial solo cuando la carga es exitosa y hay datos
     useEffect(() => {
-        if (!loading && !error && weatherData?.location) {
+        if (!loading && !errorResults && !errorServer && weatherData?.location) {
             const location = weatherData.location;
             // Guardamos con un formato consistente
             // Usamos 'id' basado en el ID de la API si existe, o generamos uno único combinando coords
@@ -39,7 +39,7 @@ const Layout = () => {
             };
             addToHistory(historyItem);
         }
-    }, [weatherData, loading, error]); // Se ejecuta cuando cambia el estado de la carga
+    }, [weatherData, loading, errorResults, errorServer]); // Se ejecuta cuando cambia el estado de la carga
 
 
     const handleSearch = (city) => {
@@ -73,33 +73,50 @@ const Layout = () => {
                     prep: handlePrepChange
                 }}
             />
-            <main>
-                <Search onSearch={handleSearch} isLoading={loading} />
-                {error && <p className={styles["error-message"]}>No search results found!</p>}
+            <main>                
+                {errorResults && (
+                    <p className={styles["error-message"]}>{errorResults}</p>
+                )}
+
+                {errorServer && (
+                    <div className={styles["server-error-container"]}>
+                        <img className={styles["server-icon-error"]} src="/images/icon-error.svg" alt="error-icon" />
+                        <h2 className={styles["server-error-title"]}>Something went wrong</h2>
+                        <p className={styles["server-error-message"]}>We couldn't connect to the server (API error). Please try again in a few moments.</p>
+                        <button className={styles["server-error-retry"]} onClick={() => window.location.reload()}>
+                            <img src="/images/icon-retry.svg" alt="retry-icon" />
+                            Retry
+                        </button>
+                    </div>
+                )}
                 
-                {!searchCity ? (
+                {!searchCity && !errorServer && !errorResults ? (
                     <div className={styles["welcome-message-container"]}>
                         <h2 className={styles["welcome-message"]}>Welcome to Weather Now! 🌤️</h2>
                         <p className={styles["welcome-paragraph"]}>Search for a city to see the forecast</p>
                     </div>
                 ) : (
-                    <div className={styles["weather-info-wrapper"]}>
-                    
-                        {(weatherData || loading) && (
+                    <>
+                        {/* Solo mostramos el contenido si hay datos o está cargando, PERO NO si hay error de servidor */}
+                        {!errorServer && !errorResults && (weatherData || loading) && (
                             <>
-                                <WeatherSummary 
-                                    current={weatherData?.current} 
-                                    location={weatherData?.location} 
-                                    isLoading={loading} 
-                                    units={units}
-                                />
-                                <>
-                                    <DailyForecast daily={weatherData?.daily} isLoading={loading} units={units} />
-                                    <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} units={units} />
-                                </>
+                                <Search onSearch={handleSearch} isLoading={loading} />
+
+                                <div className={styles["weather-info-wrapper"]}>
+                                    <WeatherSummary 
+                                        current={weatherData?.current} 
+                                        location={weatherData?.location} 
+                                        isLoading={loading} 
+                                        units={units}
+                                    />
+                                    <>
+                                        <DailyForecast daily={weatherData?.daily} isLoading={loading} units={units} />
+                                        <HourlyForecast hourly={weatherData?.hourly} daily={weatherData?.daily} isLoading={loading} units={units} />
+                                    </>
+                                </div>
                             </>
                         )}
-                    </div>
+                    </>
                 )}
             </main>
         </>

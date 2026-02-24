@@ -4,7 +4,9 @@ import { parseInputToCoordenates, fetchWeatherData } from '../api/weatherService
 const useWeather = (city, units) => {
     const [weatherData, setWeatherData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // Separamos los errores en dos estados
+    const [errorResults, setErrorResults] = useState(null); // Para "Ciudad no encontrada"
+    const [errorServer, setErrorServer] = useState(null);   // Para "Error 500 / Fallo de API"
 
     useEffect(() => {
         const getWeather = async () => {
@@ -12,7 +14,8 @@ const useWeather = (city, units) => {
             if (!city) return;
 
             setLoading(true);
-            setError(null);
+            setErrorResults(null); 
+            setErrorServer(null);
 
             try {
                 // 1. Obtener coordenadas (ahora devuelve un array)
@@ -20,7 +23,9 @@ const useWeather = (city, units) => {
 
                 // Verificamos si hay al menos un candidato
                 if (!candidates || candidates.length === 0) {
-                    throw new Error("No se pudo encontrar la ubicación.");
+                    setErrorResults("No se pudo encontrar la ubicación.");
+                    setWeatherData(null);
+                    return; // Importante detener la ejecución aquí
                 }
 
                 // Tomamos el primer resultado como la opción por defecto
@@ -48,7 +53,12 @@ const useWeather = (city, units) => {
                 });
                 
             } catch (err) {
-                setError(err.message || "Ocurrió un error inesperado");
+                console.error("Error en useWeather:", err);
+                const message = err.message || "Ocurrió un error inesperado";
+                
+                // Si el mensaje sugiere un error de servidor (como el que forzamos) o fetch fallido
+                // Asumiremos que cualquier error no controlado aquí es de servidor/conexión
+                setErrorServer(message);
                 setWeatherData(null);
             } finally {
                 setLoading(false);
@@ -58,7 +68,7 @@ const useWeather = (city, units) => {
         getWeather();
     }, [city, units]);
 
-    return { weatherData, loading, error };
+    return { weatherData, loading, errorResults, errorServer };
 };
 
 export default useWeather;
